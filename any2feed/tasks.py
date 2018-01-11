@@ -8,7 +8,7 @@ from email.mime.text import MIMEText
 import requests
 from django.conf import settings
 from django.template import loader
-from lxml import html
+from lxml import etree, html
 
 from .models import FieldInstance, Item, Watch
 
@@ -27,12 +27,25 @@ def get_item(watch, element):
     if not filters_passed:
         return
 
-    try:
-        title = element.find(watch.title_xpath).text_content().strip()
-    except AttributeError:
-        return
+    if watch.title_xpath.startswith('/'):
+        title = element.xpath(watch.title_xpath)[0]
+        title = title.text_content().strip()
+    else:
+        try:
+            title = element.find(watch.title_xpath)
+            title = title.text_content().strip()
+        except AttributeError:
+            return
 
-    href = element.find(watch.href_xpath).attrib.get('href')
+
+    href = ''
+    if watch.href_xpath:
+        href = element.find(watch.href_xpath).attrib.get('href')
+    elif watch.href_regexp:
+        links = re.findall(watch.href_regexp, etree.tostring(element).decode())
+        if links:
+            href = links[0]
+
     if href.startswith('/'):
         href = "http://{}{}".format(watch.url.lstrip('http://').split('/')[0], href)
     elif not href.startswith('http'):
@@ -58,7 +71,10 @@ def get_items_for_watch(watch):
     """
     root = html.fromstring(requests.get(watch.url).text)
     if watch.content_xpath:
-        elements = root.findall(watch.content_xpath)
+        if watch.content_xpath.startswith('/'):
+            elements = root.xpath(watch.content_xpath)
+        else:
+            elements = root.findall(watch.content_xpath)
         for element in elements:
             item = get_item(watch, element)
             if item:
