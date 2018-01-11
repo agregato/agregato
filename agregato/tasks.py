@@ -143,8 +143,8 @@ def check_watches():
 
 
 def send_notification(watch, user, items):
-    html_template = loader.get_template('any2feed/email_notification.html')
-    plain_template = loader.get_template('any2feed/email_notification.txt')
+    html_template = loader.get_template('agregato/email_notification.html')
+    plain_template = loader.get_template('agregato/email_notification.txt')
     context = {
         'user': user,
         'items': items,

@@ -34,7 +34,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('content', models.CharField(max_length=255, verbose_name='content')),
-                ('definition', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='any2feed.FieldDefinition', verbose_name='field definition')),
+                ('definition', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='agregato.FieldDefinition', verbose_name='field definition')),
             ],
             options={
                 'verbose_name': 'field instance',
@@ -91,21 +91,21 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='item',
             name='watch',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='any2feed.Watch', verbose_name='watch'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='agregato.Watch', verbose_name='watch'),
         ),
         migrations.AddField(
             model_name='filter',
             name='watch',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='filters', to='any2feed.Watch', verbose_name='watch'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='filters', to='agregato.Watch', verbose_name='watch'),
         ),
         migrations.AddField(
             model_name='fieldinstance',
             name='item',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='fields', to='any2feed.Item', verbose_name='item'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='fields', to='agregato.Item', verbose_name='item'),
         ),
         migrations.AddField(
             model_name='fielddefinition',
             name='watch',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='fields', to='any2feed.Watch', verbose_name='watch'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='fields', to='agregato.Watch', verbose_name='watch'),
         ),
     ]

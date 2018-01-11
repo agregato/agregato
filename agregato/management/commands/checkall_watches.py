@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 
-from any2feed.tasks import check_watches
+from agregato.tasks import check_watches
 
 
 class Command(BaseCommand):
