@@ -1,0 +1,10 @@
+{% for item in items %}
+<div><p><a href="{{ item.href }}">{{ item.title }}</a></p>
+    <dl>
+    {% for field in item.fields.all %}
+    <dt>{{ field.definition }}</dt>
+    <dd>{{ field.content }}</dd>
+    {% endfor %}
+    </dl>
+</div>
+{% endfor %}

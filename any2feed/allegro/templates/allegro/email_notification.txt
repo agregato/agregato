@@ -1,0 +1,4 @@
+{% for item in items %}
+{{ item.price }} - {{ item.title }}
+{{ item.href }}
+{% endfor %}
