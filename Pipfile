@@ -11,6 +11,6 @@ name = "pypi"
 
 [packages]
 
-django = "<2.0"
+django = "*"
 lxml = "*"
 requests = "*"
