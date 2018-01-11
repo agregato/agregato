@@ -7,7 +7,7 @@ from email.mime.text import MIMEText
 
 import requests
 from django.conf import settings
-from django.template import Context, loader
+from django.template import loader
 from lxml import html
 
 from .models import FieldInstance, Item, Watch
@@ -21,7 +21,7 @@ def get_item(watch, element):
 
     filters_passed = True
     for filter in watch.filters.all():
-        if not re.findall(filter.regexp, content):
+        if not re.findall(filter.regexp, content, re.IGNORECASE):
             filters_passed = False
 
     if not filters_passed:
